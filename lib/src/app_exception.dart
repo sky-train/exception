@@ -40,3 +40,9 @@ class AppException implements Exception {
 
 
 }
+
+class UnhandledException extends AppException {
+  UnhandledException(Exception parent) {
+    setParent(parent);
+  }
+}
