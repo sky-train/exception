@@ -11,3 +11,7 @@ class HttpException extends AppException {
   }
 
 }
+
+class HttpValidationException extends HttpException {
+
+}
