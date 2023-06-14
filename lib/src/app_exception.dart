@@ -1,8 +1,8 @@
 
 class AppException implements Exception {
   String? _code;
+  Object? _parent;
   String? _message;
-  Exception? _parent;
   final Map<String, Object?> _props = {};
   final Map<String, Object?> _context = {};
 
@@ -17,7 +17,7 @@ class AppException implements Exception {
     return "[$code] ${message ?? ''}";
   }
 
-  void setParent(Exception exception) {
+  void setParent(Object exception) {
     if(_parent==null) {
       _parent = exception;
     }
@@ -42,7 +42,7 @@ class AppException implements Exception {
 }
 
 class UnhandledException extends AppException {
-  UnhandledException(Exception parent) {
+  UnhandledException(Object parent) {
     setParent(parent);
   }
 }
