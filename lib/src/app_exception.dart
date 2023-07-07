@@ -1,14 +1,13 @@
-
-class AppException implements Exception {
+abstract class AppException implements Exception {
   String? _code;
   Object? _parent;
   String? _message;
   final Map<String, Object?> _props = {};
   final Map<String, Object?> _context = {};
 
+  String get code => _code ?? runtimeType.toString();
 
-  String get code=>_code ?? runtimeType.toString();
-  String? get message=>_message;
+  String? get message => _message;
 
   AppException([this._message]);
 
@@ -18,10 +17,9 @@ class AppException implements Exception {
   }
 
   void setParent(Object exception) {
-    if(_parent==null) {
+    if (_parent == null) {
       _parent = exception;
-    }
-    else {
+    } else {
       // log warn
     }
   }
@@ -37,12 +35,17 @@ class AppException implements Exception {
   void setContext(Map<String, Object?> context) {
     _context.addAll(context);
   }
-
-
 }
 
 class UnhandledException extends AppException {
   UnhandledException(Object parent) {
     setParent(parent);
+  }
+
+  static AppException wrapIfNotAppException(Object err) {
+    if (err is! AppException) {
+      return UnhandledException(err);
+    }
+    return err;
   }
 }

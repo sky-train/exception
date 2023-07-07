@@ -3,14 +3,14 @@ import 'package:test/test.dart';
 
 void main() {
   group('A group of tests', () {
-    final awesome = AppException();
+    final awesome = HttpException();
 
     setUp(() {
       // Additional setup goes here.
     });
 
     test('First Test', () {
-      expect(awesome.code, 'AppException');
+      expect(awesome.code, 'HttpException');
     });
   });
 }
