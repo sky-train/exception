@@ -1,5 +1,4 @@
-
-import 'package:app_exception/app_exceptions.dart';
+import 'app_exception.dart';
 
 class HttpException extends AppException {
   int _status = 500;

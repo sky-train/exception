@@ -1,3 +1,5 @@
+import 'package:logging/logging.dart';
+
 abstract class AppException implements Exception {
   String? _code;
   Object? _parent;
@@ -35,6 +37,17 @@ abstract class AppException implements Exception {
   void setContext(Map<String, Object?> context) {
     _context.addAll(context);
   }
+
+  void print([String? message]) {
+    _logger.shout(message, this);
+  }
+
+  static final Logger _logger = Logger("AppException");
+
+  static Logger get logger {
+    return _logger;
+  }
+
 }
 
 class UnhandledException extends AppException {
