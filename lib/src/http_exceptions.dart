@@ -1,6 +1,6 @@
 import 'app_exception.dart';
 
-abstract class HttpException extends AppException {
+class HttpException extends AppException {
   int _status = 500;
 
   int get httpStatus => _status;
