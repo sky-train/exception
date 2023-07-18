@@ -28,9 +28,6 @@ abstract class AppException implements Exception {
       if(_parent is AppException) {
         parentInfo = (_parent as AppException).code;
       }
-      else  {
-        parentInfo = '$_parent';
-      }
     }
 
     var err =
