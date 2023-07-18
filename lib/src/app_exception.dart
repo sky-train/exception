@@ -1,5 +1,3 @@
-import 'package:logging/logging.dart';
-
 abstract class AppException implements Exception {
   String? _code;
   Object? _parent;
@@ -51,26 +49,20 @@ abstract class AppException implements Exception {
     _context.addAll(context);
   }
 
-  void print([String? message]) {
-    _logger.shout(message, this);
-  }
-
-  static final Logger _logger = Logger("AppException");
-
-  static Logger get logger {
-    return _logger;
-  }
+  // do noting
+  // expected this method override later
+  void print([String? message]);
 }
 
-class UnhandledException extends AppException {
-  UnhandledException(Object parent) {
-    setParent(parent);
-  }
-
-  static AppException wrapIfNotAppException(Object err) {
-    if (err is! AppException) {
-      return UnhandledException(err);
-    }
-    return err;
-  }
-}
+// class UnhandledException extends AppException {
+//   UnhandledException(Object parent) {
+//     setParent(parent);
+//   }
+//
+//   static AppException wrapIfNotAppException(Object err) {
+//     if (err is! AppException) {
+//       return UnhandledException(err);
+//     }
+//     return err;
+//   }
+// }
