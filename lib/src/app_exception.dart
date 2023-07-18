@@ -11,11 +11,23 @@ abstract class AppException implements Exception {
 
   String? get message => _message;
 
+  Map<String, Object?> get props => _props;
+
+  Map<String, Object?> get context => _context;
+
   AppException([this._message]);
 
   @override
   String toString() {
     return "[$code] ${message ?? ''}";
+  }
+
+  void setCode(String code) {
+    if (_code == null) {
+      _code = code;
+    } else {
+      // log warn
+    }
   }
 
   void setParent(Object exception) {
@@ -47,7 +59,6 @@ abstract class AppException implements Exception {
   static Logger get logger {
     return _logger;
   }
-
 }
 
 class UnhandledException extends AppException {
