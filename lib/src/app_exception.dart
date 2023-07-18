@@ -7,7 +7,8 @@ abstract class AppException implements Exception {
   final Map<String, Object?> _props = {};
   final Map<String, Object?> _context = {};
 
-  String get code => _code ?? runtimeType.toString();
+  String get code =>
+      '${runtimeType.toString()}${_code != null ? '.$_code' : ''}';
 
   String? get message => _message;
 
