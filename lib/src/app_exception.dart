@@ -26,20 +26,24 @@ abstract class AppException implements Exception {
     String parentInfo = '';
     if(_parent!=null) {
       if(_parent is AppException) {
-        parentInfo = (_parent as AppException).code;
+        parentInfo = ' parent: ${(_parent as AppException).code}';
+      }
+      else {
+        parentInfo = ' (has parent exception)';
       }
     }
 
     var err =
-        '[EXCEPTION 💀️] ${'code: $code'}${message != null ? ' message: ${message!}' : ''}${parentInfo.isNotEmpty ? ' parent: $parentInfo' : ''}';
+        '[EXCEPTION 💀️] ${'code: $code'}${message != null ? ' message: ${message!}' : ''}${parentInfo.isNotEmpty ? parentInfo : ''}';
 
     if (_stackTrace != null) {
-      err += '\n[STACK 🔦💀] $_stackTrace';
+      err += '\n[STACK 🔦💀]\n $_stackTrace';
     }
 
     if (_context.isNotEmpty) {
+      err += '\n[CONTEXT 🤮💀️]';
       _context.forEach((key, value) {
-        err += '\n[CONTEXT 🤮💀️] $key, $value';
+        err += '\n $key, $value';
       });
     }
 
