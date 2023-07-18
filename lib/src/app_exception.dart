@@ -37,7 +37,8 @@ abstract class AppException implements Exception {
         '[EXCEPTION 💀️] ${'code: $code'}${message != null ? ' message: ${message!}' : ''}${parentInfo.isNotEmpty ? parentInfo : ''}';
 
     if (_stackTrace != null) {
-      err += '\n[STACK 🔦💀]\n $_stackTrace';
+      String stack = _stackTrace.toString().split('\n').where((line) => line.trim().substring(0,1)=="#").toList().join('\n');
+      err += '\n[STACK 🔦💀]\n$stack';
     }
 
     if (_context.isNotEmpty) {
