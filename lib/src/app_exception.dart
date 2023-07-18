@@ -23,8 +23,18 @@ abstract class AppException implements Exception {
 
   @override
   String toString() {
+    String parentInfo = '';
+    if(_parent!=null) {
+      if(_parent is AppException) {
+        parentInfo = (_parent as AppException).code;
+      }
+      else  {
+        parentInfo = '$_parent';
+      }
+    }
+
     var err =
-        '[EXCEPTION 💀️] ${'code: $code'}${message != null ? ' message: ${message!}' : ''}${parent is AppException ? ' parent: ${(parent as AppException).code}' : ''}';
+        '[EXCEPTION 💀️] ${'code: $code'}${message != null ? ' message: ${message!}' : ''}${parentInfo.isNotEmpty ? ' parent: $parentInfo' : ''}';
 
     if (_stackTrace != null) {
       err += '\n[STACK 🔦💀] $_stackTrace';
