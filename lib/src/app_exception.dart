@@ -1,4 +1,4 @@
-abstract class AppException implements Exception {
+abstract class AppExceptionBase implements Exception {
   String? _code;
   Object? _parent;
   String? _message;
@@ -19,16 +19,15 @@ abstract class AppException implements Exception {
 
   Map<String, Object?> get context => _context;
 
-  AppException([this._message]);
+  AppExceptionBase([this._message]);
 
   @override
   String toString() {
     String parentInfo = '';
-    if(_parent!=null) {
-      if(_parent is AppException) {
-        parentInfo = ' parent: ${(_parent as AppException).code}';
-      }
-      else {
+    if (_parent != null) {
+      if (_parent is AppExceptionBase) {
+        parentInfo = ' parent: ${(_parent as AppExceptionBase).code}';
+      } else {
         parentInfo = ' (has parent exception)';
       }
     }
@@ -37,9 +36,14 @@ abstract class AppException implements Exception {
         '[EXCEPTION 💀️] ${'code: $code'}${message != null ? ' message: ${message!}' : ''}${parentInfo.isNotEmpty ? parentInfo : ''}';
 
     if (_stackTrace != null) {
-      String stack = _stackTrace.toString().split('\n').where((line) {
-        return line.trim().isNotEmpty && line.trim().substring(0,1)=="#";
-      }).toList().join('\n');
+      String stack = _stackTrace
+          .toString()
+          .split('\n')
+          .where((line) {
+            return line.trim().isNotEmpty && line.trim().substring(0, 1) == "#";
+          })
+          .toList()
+          .join('\n');
       err += '\n[STACK 🔦💀]\n$stack';
     }
 
@@ -87,18 +91,5 @@ abstract class AppException implements Exception {
     } else {
       // log warn
     }
-  }
-}
-
-class UnhandledException extends AppException {
-  UnhandledException(Object parent) {
-    setParent(parent);
-  }
-
-  static AppException wrapIfNotAppException(Object err) {
-    if (err is! AppException) {
-      return UnhandledException(err);
-    }
-    return err;
   }
 }
