@@ -1,4 +1,4 @@
-abstract class AppExceptionBase implements Exception {
+abstract class AppException implements Exception {
   String? _code;
   Object? _parent;
   String? _message;
@@ -19,14 +19,14 @@ abstract class AppExceptionBase implements Exception {
 
   Map<String, Object?> get context => _context;
 
-  AppExceptionBase([this._message]);
+  AppException([this._message]);
 
   @override
   String toString() {
     String parentInfo = '';
     if (_parent != null) {
-      if (_parent is AppExceptionBase) {
-        parentInfo = ' parent: ${(_parent as AppExceptionBase).code}';
+      if (_parent is AppException) {
+        parentInfo = ' parent: ${(_parent as AppException).code}';
       } else {
         parentInfo = ' (has parent exception)';
       }
