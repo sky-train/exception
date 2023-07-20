@@ -23,17 +23,33 @@ abstract class AppException implements Exception {
 
   @override
   String toString() {
-    String parentInfo = '';
+    final dInfo = debugInfo();
+    String result = '';
+    if (dInfo.containsKey("message")) {
+      result += (dInfo.isNotEmpty ? '\n' : '') + dInfo["message"]!;
+    }
+    if (dInfo.containsKey("stack")) {
+      result += (dInfo.isNotEmpty ? '\n' : '') + dInfo["stack"]!;
+    }
+    if (dInfo.containsKey("context")) {
+      result += (dInfo.isNotEmpty ? '\n' : '') + dInfo["context"]!;
+    }
+    return result;
+  }
+
+  Map<String, String> debugInfo() {
+    String pInfo = '';
+    String sInfo = '';
+    String cInfo = '';
+
     if (_parent != null) {
-      if (_parent is AppException) {
-        parentInfo = ' parent: ${(_parent as AppException).code}';
-      } else {
-        parentInfo = ' (has parent exception)';
-      }
+      pInfo = _parent is AppException
+          ? ' parent: ${(_parent as AppException).code}'
+          : ' (has parent exception)';
     }
 
-    var err =
-        '[EXCEPTION 💀️] ${'code: $code'}${message != null ? ' message: ${message!}' : ''}${parentInfo.isNotEmpty ? parentInfo : ''}';
+    String mInfo =
+        '[EXCEPTION 💀️]\n\t${'code: $code'}${message != null ? ' message: ${message!}' : ''}${pInfo.isNotEmpty ? pInfo : ''}';
 
     if (_stackTrace != null) {
       String stack = _stackTrace
@@ -44,17 +60,21 @@ abstract class AppException implements Exception {
           })
           .toList()
           .join('\n');
-      err += '\n[STACK 🔦💀]\n$stack';
+      sInfo = '[STACK 🔦💀]\n$stack';
     }
 
     if (_context.isNotEmpty) {
-      err += '\n[CONTEXT 🤮💀️]';
+      cInfo += '[CONTEXT 🤮💀️]';
       _context.forEach((key, value) {
-        err += '\n $key, $value';
+        cInfo += '\n\t$key, $value';
       });
     }
 
-    return err;
+    return {
+      "message": mInfo,
+      "context": cInfo,
+      "stack": sInfo,
+    };
   }
 
   void setCode(String code) {
