@@ -26,13 +26,15 @@ abstract class AppException implements Exception {
     final dInfo = debugInfo();
     String result = '';
     if (dInfo.containsKey("message")) {
-      result += (dInfo.isNotEmpty ? '\n' : '') + dInfo["message"]!;
+      result = '[EXCEPTION 💀️] ${dInfo["message"]!}';
     }
     if (dInfo.containsKey("stack")) {
-      result += (dInfo.isNotEmpty ? '\n' : '') + dInfo["stack"]!;
+      result +=
+          '${dInfo.isNotEmpty ? '\n' : ''}[STACK 🔦💀]\n${dInfo["stack"]!}';
     }
     if (dInfo.containsKey("context")) {
-      result += (dInfo.isNotEmpty ? '\n' : '') + dInfo["context"]!;
+      result +=
+          '${dInfo.isNotEmpty ? '\n' : ''}[CONTEXT 🤮💀️]\n${dInfo["context"]!}';
     }
     return result;
   }
@@ -49,10 +51,10 @@ abstract class AppException implements Exception {
     }
 
     String mInfo =
-        '[EXCEPTION 💀️]\n\t${'code: $code'}${message != null ? ' message: ${message!}' : ''}${pInfo.isNotEmpty ? pInfo : ''}';
+        '${'code: $code'}${message != null ? ' message: ${message!}' : ''}${pInfo.isNotEmpty ? pInfo : ''}';
 
     if (_stackTrace != null) {
-      String stack = _stackTrace
+      sInfo = _stackTrace
           .toString()
           .split('\n')
           .where((line) {
@@ -60,14 +62,13 @@ abstract class AppException implements Exception {
           })
           .toList()
           .join('\n');
-      sInfo = '[STACK 🔦💀]\n$stack';
     }
 
     if (_context.isNotEmpty) {
-      cInfo += '[CONTEXT 🤮💀️]';
-      _context.forEach((key, value) {
-        cInfo += '\n\t$key, $value';
-      });
+      cInfo = _context.entries
+          .map((e) => '${e.key}, ${e.value}')
+          .toList()
+          .join('\n');
     }
 
     return {
