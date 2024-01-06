@@ -56,4 +56,17 @@ abstract class AppException implements Exception {
       // log warn
     }
   }
+
+  void print4() {
+    var data = <String>[];
+    data.add(
+        '[ERROR 💀️] code: $code message: $message ${(parent != null && parent is AppException) ? 'parent: ${(parent as AppException).code}' : ''}');
+    if (_stackTrace != null) {
+      data.add('[STACK 🔦💀] $_stackTrace');
+    }
+    for (final item in _context.entries) {
+      data.add('[CONTEXT 🤮💀️] ${item.key}, ${item.value}');
+    }
+    print(data.join('\n'));
+  }
 }
