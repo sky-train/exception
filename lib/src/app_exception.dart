@@ -1,72 +1,40 @@
-abstract class AppException implements Exception {
-  String? _code;
-  Object? _parent;
-  String? _message;
-  StackTrace? _stackTrace;
-  final Map<String, Object?> _props = {};
-  final Map<String, Object?> _context = {};
+import 'dart:core' as core;
 
-  String get code =>
-      '${runtimeType.toString()}${_code != null ? '.$_code' : ''}';
+abstract class AppException implements core.Exception {
+  abstract final core.int code; // 2 Unknown error.
+  final core.Object? parent;
+  final core.StackTrace? stackTrace;
+  final core.Map<core.String, core.Object?> _context = {};
 
-  String? get message => _message;
 
-  Object? get parent => _parent;
+  core.String? _message;
 
-  Map<String, Object?> get props => _props;
+  core.String? get message => '${runtimeType.toString()}${'.$code'}${_message != null ? ' $_message' : ''}';
 
-  StackTrace? get stackTrace => _stackTrace;
+  core.Map<core.String, core.Object?> get context => _context;
 
-  Map<String, Object?> get context => _context;
+  AppException({core.String? message, core.StackTrace? stack, this.parent })
+      : _message = message,
+        stackTrace = stack;
 
-  AppException([this._message]);
-
-  void setCode(String code) {
-    if (_code == null) {
-      _code = code;
-    } else {
-      // log warn
-    }
-  }
-
-  void setParent(Object exception) {
-    if (_parent == null) {
-      _parent = exception;
-    } else {
-      // log warn
-    }
-  }
-
-  void setMessage(String message) {
+  void setMessage(core.String message) {
     _message = message;
   }
 
-  void setProps(Map<String, Object?> props) {
-    _props.addAll(props);
-  }
-
-  void setContext(Map<String, Object?> context) {
+  void setContext(core.Map<core.String, core.Object?> context) {
     _context.addAll(context);
   }
 
-  void setStackTrace(StackTrace stackTrace) {
-    if (_stackTrace == null) {
-      _stackTrace = stackTrace;
-    } else {
-      // log warn
-    }
-  }
-
-  void print4() {
-    var data = <String>[];
+  void print() {
+    var data = <core.String>[];
     data.add(
-        '[ERROR 💀️] code: $code message: $message ${(parent != null && parent is AppException) ? 'parent: ${(parent as AppException).code}' : ''}');
-    if (_stackTrace != null) {
-      data.add('[STACK 🔦💀] $_stackTrace');
+        '[ERROR 💀️] message: $message ${(parent != null && parent is AppException) ? 'parent: ${(parent as AppException).message}' : ''}');
+    if (stackTrace != null) {
+      data.add('[STACK 🔦💀] $stackTrace');
     }
     for (final item in _context.entries) {
-      data.add('[CONTEXT 🤮💀️] ${item.key}, ${item.value}');
+      data.add('[CONTEXT 🤮💀️] ${item.key.toString()}, ${item.value.toString()}');
     }
-    print(data.join('\n'));
+    core.print(data.join('\n'));
   }
 }
