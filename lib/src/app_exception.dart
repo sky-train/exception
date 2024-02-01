@@ -1,7 +1,7 @@
 import 'dart:core' as core;
 
 abstract class AppException implements core.Exception {
-  abstract final core.int code; // 2 Unknown error.
+  abstract final core.String code;
   final core.Object? parent;
   final core.StackTrace? stackTrace;
   final core.Map<core.String, core.Object?> _context = {};
