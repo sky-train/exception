@@ -9,7 +9,10 @@ abstract class AppException implements core.Exception {
 
   core.String? _message;
 
-  core.String? get message => '${runtimeType.toString()}${'.$code'}${_message != null ? ' $_message' : ''}';
+  core.String get message {
+    core.String topMessage = _message ?? parent?.toString() ?? '';
+    return '${runtimeType.toString()}${'.$code '}$topMessage';
+  }
 
   core.Map<core.String, core.Object?> get context => _context;
 
@@ -25,10 +28,15 @@ abstract class AppException implements core.Exception {
     _context.addAll(context);
   }
 
+  @core.override
+  core.String toString() {
+    return message;
+  }
+
   void print() {
     var data = <core.String>[];
     data.add(
-        '[ERROR 💀️] message: $message ${(parent != null && parent is AppException) ? 'parent: ${(parent as AppException).message}' : ''}');
+        '[ERROR 💀️] message: $message ${parent!=null?' parent: ${parent?.runtimeType.toString()}':''}');
     if (stackTrace != null) {
       data.add('[STACK 🔦💀] $stackTrace');
     }

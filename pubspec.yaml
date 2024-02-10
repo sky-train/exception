@@ -1,6 +1,6 @@
 name: app_exception
 description: A starting point for Dart libraries or applications.
-version: 2.0.3
+version: 2.0.4
 publish_to: none
 
 environment:
