@@ -1,40 +1,40 @@
-import 'dart:core' as core;
+import 'package:console/console.dart';
 
-abstract class AppException implements core.Exception {
-  abstract final core.String code;
-  final core.Object? parent;
-  final core.StackTrace? stackTrace;
-  final core.Map<core.String, core.Object?> _context = {};
+abstract class AppException implements Exception {
+  abstract final String code;
+  final Object? parent;
+  final StackTrace? stackTrace;
+  final Map<String, Object?> _context = {};
 
 
-  core.String? _message;
+  String? _message;
 
-  core.String get message {
-    core.String topMessage = _message ?? parent?.toString() ?? '';
+  String get message {
+    String topMessage = _message ?? parent?.toString() ?? '';
     return '${runtimeType.toString()}${'.$code '}$topMessage';
   }
 
-  core.Map<core.String, core.Object?> get context => _context;
+  Map<String, Object?> get context => _context;
 
-  AppException({core.String? message, core.StackTrace? stack, this.parent })
+  AppException({String? message, StackTrace? stack, this.parent })
       : _message = message,
         stackTrace = stack;
 
-  void setMessage(core.String message) {
+  void setMessage(String message) {
     _message = message;
   }
 
-  void setContext(core.Map<core.String, core.Object?> context) {
+  void setContext(Map<String, Object?> context) {
     _context.addAll(context);
   }
 
-  @core.override
-  core.String toString() {
+  @override
+  String toString() {
     return message;
   }
 
   void print() {
-    var data = <core.String>[];
+    var data = <String>[];
     data.add(
         '[ERROR 💀️] message: $message ${parent!=null?' parent: ${parent?.runtimeType.toString()}':''}');
     if (stackTrace != null) {
@@ -43,6 +43,6 @@ abstract class AppException implements core.Exception {
     for (final item in _context.entries) {
       data.add('[CONTEXT 🤮💀️] ${item.key.toString()}, ${item.value.toString()}');
     }
-    core.print(data.join('\n'));
+    console.error(data.join('\n'));
   }
 }
