@@ -1,7 +1,6 @@
-# Exceptions
+# Exception
+
     abstract AppException
 
-    UnhandledException
-    HttpException
-    HttpValidationException
+
 

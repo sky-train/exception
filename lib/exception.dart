@@ -1,22 +1,22 @@
+library;
+
 import 'package:console/console.dart';
 
 abstract class AppException implements Exception {
-  abstract final String code;
   final Object? parent;
   final StackTrace? stackTrace;
   final Map<String, Object?> _context = {};
-
 
   String? _message;
 
   String get message {
     String topMessage = _message ?? parent?.toString() ?? '';
-    return '${runtimeType.toString()}${'.$code '}$topMessage';
+    return '${runtimeType.toString()} $topMessage';
   }
 
   Map<String, Object?> get context => _context;
 
-  AppException({String? message, StackTrace? stack, this.parent })
+  AppException({String? message, StackTrace? stack, this.parent})
       : _message = message,
         stackTrace = stack;
 
@@ -35,8 +35,7 @@ abstract class AppException implements Exception {
 
   void print() {
     var data = <String>[];
-    data.add(
-        '[ERROR 💀️] message: $message ${parent!=null?' parent: ${parent?.runtimeType.toString()}':''}');
+    data.add('[ERROR 💀️] message: $message ${parent != null ? ' parent: ${parent?.runtimeType.toString()}' : ''}');
     if (stackTrace != null) {
       data.add('[STACK 🔦💀] $stackTrace');
     }
