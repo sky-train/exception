@@ -3,6 +3,7 @@ library;
 import 'package:console/console.dart';
 
 abstract class AppException implements Exception {
+  abstract final String code;
   final Object? parent;
   final StackTrace? stackTrace;
   final Map<String, Object?> _context = {};
