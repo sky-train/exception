@@ -32,7 +32,7 @@ abstract class AppException implements Exception {
     return rows.join('\n');
   }
 
-  static String _formatedExceptionMessage(AppException exception) {
+  static String formatedExceptionMessage(AppException exception) {
     final data = <String>[];
     data.add(
         '[ERROR 💀️] code: (${exception.code}), message: ${exception.message}${exception.parent != null ? ', has parent ${exception.parent is AppException ? (exception.parent as AppException).code : ''}' : ''}');
