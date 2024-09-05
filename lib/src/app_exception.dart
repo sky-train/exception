@@ -23,7 +23,7 @@ abstract class AppException implements Exception {
     Object? current = this;
     for (int i = 0; i <= 5; i++) {
       if (current is AppException) {
-        rows.add(AppException._formatedExceptionMessage(current));
+        rows.add(AppException.formatedExceptionMessage(current));
         current = current.parent;
       } else {
         break;
@@ -40,7 +40,8 @@ abstract class AppException implements Exception {
       data.add('[STACK 🔦💀] ${exception.stackTrace}');
     }
     for (final item in exception._context.entries) {
-      data.add('[CONTEXT 🤮💀️] ${item.key.toString()} => ${item.value.toString()}');
+      data.add(
+          '[CONTEXT 🤮💀️] ${item.key.toString()} => ${item.value.toString()}');
     }
     return data.join('\n');
   }
