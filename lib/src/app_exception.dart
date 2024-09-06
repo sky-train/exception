@@ -13,8 +13,8 @@ abstract class AppException implements Exception {
     final hasParent = parent != null;
     final errParentCode = hasParent
         ? ((parent is AppException)
-            ? ', p(${(parent as AppException).code}, ${runtimeType.toString()})'
-            : ', h.p.')
+            ? ' p(${(parent as AppException).code}, ${runtimeType.toString()})'
+            : ' h.p.')
         : '';
     final errMessage = '${message ?? ''}$errParentCode';
 
