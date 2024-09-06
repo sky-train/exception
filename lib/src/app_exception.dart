@@ -18,14 +18,14 @@ abstract class AppException implements Exception {
         : '';
     final errMessage = '${message ?? ''}$errParentCode';
 
-    text.add('[💀️] $code, ${runtimeType.toString()}, $errMessage');
+    text.add('💀️ $code, ${runtimeType.toString()}, $errMessage');
 
     if (trace != null && _checkBit(detailing, 1)) {
-      text.add('[🔦💀] $trace');
+      text.add('💀🔦 $trace');
     }
     if (_checkBit(detailing, 2)) {
       for (final item in context.entries) {
-        text.add('[🤮💀️] ${item.key} => ${item.value?.toString()}');
+        text.add('💀🤮 ${item.key} => ${item.value?.toString()}');
       }
     }
 
