@@ -1,5 +1,5 @@
 abstract class AppException implements Exception {
-  abstract final String code;
+  abstract final int code;
   final Object? parent;
   final String? message;
   final StackTrace? trace;

@@ -2,7 +2,7 @@ import 'app_exception.dart';
 
 class UnhandledException extends AppException {
   @override
-  final String code = 'UnhandledException';
+  final int code = 1;
   UnhandledException({super.message, super.parent, super.trace});
 
   static AppException wrapUnknown(Object? err, [StackTrace? trace]) {
