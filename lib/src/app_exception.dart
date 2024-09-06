@@ -13,19 +13,19 @@ abstract class AppException implements Exception {
     final hasParent = parent != null;
     final errParentCode = hasParent
         ? ((parent is AppException)
-            ? ', parent code(${(parent as AppException).code})'
-            : ', has parent')
+            ? ', p(${(parent as AppException).code}, ${runtimeType.toString()})'
+            : ', h.p.')
         : '';
     final errMessage = '${message ?? ''}$errParentCode';
 
-    text.add('[ERROR 💀️] code: ($code), $errMessage');
+    text.add('[💀️] $code, ${runtimeType.toString()}, $errMessage');
 
     if (trace != null && _checkBit(detailing, 1)) {
-      text.add('[STACK 🔦💀] $trace');
+      text.add('[🔦💀] $trace');
     }
     if (_checkBit(detailing, 2)) {
       for (final item in context.entries) {
-        text.add('[CONTEXT 🤮💀️] ${item.key} => ${item.value?.toString()}');
+        text.add('[🤮💀️] ${item.key} => ${item.value?.toString()}');
       }
     }
 

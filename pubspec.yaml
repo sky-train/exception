@@ -1,6 +1,6 @@
 name: exception
 description: abstract app exception
-version: 4.2.12
+version: 4.2.13
 publish_to: none
 
 environment:
