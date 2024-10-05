@@ -1,11 +1,7 @@
 name: exception
 description: abstract app exception
-version: 4.2.14
+version: 4.2.15
 publish_to: none
 
 environment:
   sdk: ^3.0.0
-
-#dependencies:
-dev_dependencies:
-  lints: 4.0.0
